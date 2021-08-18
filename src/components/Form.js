@@ -8,7 +8,7 @@ export default function Form() {
     setText(e.target.value)
   }
   return (
-    <>
+    <div className="container">
       <div className="mb-3">
         <label htmlFor="texareaBox" className="form-label">
           Enter Text Here
@@ -33,6 +33,6 @@ export default function Form() {
         <p>{Math.floor(0.008 * text.split(' ').length)} Minutes read.</p>
         <p>{text}</p>
       </div>
-    </>
+    </div>
   );
 }

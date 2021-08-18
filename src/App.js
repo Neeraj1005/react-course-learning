@@ -1,13 +1,13 @@
-import Form from "./components/Form";
+import About from "./components/About";
+// import Form from "./components/Form";
 import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <>
       <Navbar />
-      <div className="container">
-        <Form />
-      </div>
+      {/* <Form /> */}
+      <About />
     </>
   );
 }
