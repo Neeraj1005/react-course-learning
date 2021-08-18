@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Form() {
+export default function Form(props) {
   const [text, setText] = useState("");
 
   const handleOnChange = (e) => {
@@ -20,7 +20,7 @@ export default function Form() {
   return (
     <div className="container">
       <div className="mb-3">
-        <label htmlFor="texareaBox" className="form-label">
+        <label htmlFor="texareaBox" className={`form-label text-${props.mode === 'light' ? 'gray' : 'white'}`}>
           Enter Text Here
         </label>
         <textarea
@@ -41,41 +41,42 @@ export default function Form() {
         </button>
         <button
           type="submit"
-          className="btn btn-secondary m-2"
+          className="btn btn-primary m-2"
           onClick={() => setText(text.toLowerCase())}
         >
           lowercase
         </button>
         <button
           type="submit"
-          className="btn btn-secondary m-2"
+          className="btn btn-primary m-2"
           onClick={() => setText("")}
         >
           Clear
         </button>
         <button
           type="submit"
-          className="btn btn-secondary m-2"
+          className="btn btn-primary m-2"
           onClick={handleCopy}
         >
           Copy
         </button>
         <button
           type="submit"
-          className="btn btn-secondary m-2"
+          className="btn btn-primary m-2"
           onClick={removeExtraSpaces}
         >
           Remove Extra Spaces
         </button>
       </div>
 
-      <div>
+      <div className={`text-${props.mode === 'light' ? 'gray' : 'white'}`}>
         <h1>Summary</h1>
         <p>
           {text.split(" ").length} words and {text.length} characters
         </p>
         <p>{Math.floor(0.008 * text.split(" ").length)} Minutes read.</p>
-        <p>{text}</p>
+        <h2>Preview</h2>
+        <p>{text.length > 0 ? text : 'Enter Some Text For Preview'}</p>
       </div>
     </div>
   );
