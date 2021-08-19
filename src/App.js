@@ -23,10 +23,12 @@ function App() {
       setMode('light')
       document.body.style.backgroundColor = 'white'
       showAlert('Light Mode Enabled','success')
+      document.title = 'My-App: Light Mode'
     } else {
       setMode('dark')
       document.body.style.backgroundColor = '#30304c'
       showAlert('Dark Mode Enabled','success')
+      document.title = 'My-App: Dark Mode'
     }
   }
   return (
