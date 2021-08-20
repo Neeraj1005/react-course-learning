@@ -1,42 +1,51 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Alert from "./components/Alert";
-// import About from "./components/About";
-import Form from "./components/Form";
+import About from "./components/About";
+import TextForm from "./components/TextForm";
 import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
-  const [mode, setMode] = useState('light')
-  const [alert, setAlert] = useState(null)
+  const [mode, setMode] = useState("light");
+  const [alert, setAlert] = useState(null);
 
   const showAlert = (message, type) => {
     setAlert({
       msg: message,
-      type: type
-    })
+      type: type,
+    });
     setTimeout(() => {
-      setAlert(null)
+      setAlert(null);
     }, 1500);
-  }
+  };
 
   const toggleMode = () => {
-    if (mode === 'dark') {
-      setMode('light')
-      document.body.style.backgroundColor = 'white'
-      showAlert('Light Mode Enabled','success')
-      document.title = 'My-App: Light Mode'
+    if (mode === "dark") {
+      setMode("light");
+      document.body.style.backgroundColor = "white";
+      showAlert("Light Mode Enabled", "success");
+      document.title = "My-App: Light Mode";
     } else {
-      setMode('dark')
-      document.body.style.backgroundColor = '#30304c'
-      showAlert('Dark Mode Enabled','success')
-      document.title = 'My-App: Dark Mode'
+      setMode("dark");
+      document.body.style.backgroundColor = "#30304c";
+      showAlert("Dark Mode Enabled", "success");
+      document.title = "My-App: Dark Mode";
     }
-  }
+  };
   return (
     <>
-      <Navbar mode={mode} toggleMode={toggleMode} />
-      <Alert alert={alert} />
-      <Form mode={mode} showAlert={showAlert} />
-      {/* <About /> */}
+      <Router>
+        <Navbar mode={mode} toggleMode={toggleMode} />
+        <Alert alert={alert} />
+        <Switch>
+          <Route exact path="/about">
+            <About />
+          </Route>
+          <Route exact path="/">
+            <TextForm mode={mode} showAlert={showAlert} />
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }
