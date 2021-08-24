@@ -3,7 +3,7 @@ import Alert from "./components/Alert";
 import About from "./components/About";
 import TextForm from "./components/TextForm";
 import Navbar from "./components/Navbar";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   const [mode, setMode] = useState("light");
@@ -24,12 +24,12 @@ function App() {
       setMode("light");
       document.body.style.backgroundColor = "white";
       showAlert("Light Mode Enabled", "success");
-      document.title = "My-App: Light Mode";
+      // document.title = "My-App: Light Mode";
     } else {
       setMode("dark");
       document.body.style.backgroundColor = "#30304c";
       showAlert("Dark Mode Enabled", "success");
-      document.title = "My-App: Dark Mode";
+      // document.title = "My-App: Dark Mode";
     }
   };
   return (
@@ -39,10 +39,10 @@ function App() {
         <Alert alert={alert} />
         <Switch>
           <Route exact path="/about">
-            <About />
+            <About mode={mode} />
           </Route>
           <Route exact path="/">
-            <TextForm mode={mode} showAlert={showAlert} />
+            <TextForm mode={mode} showAlert={showAlert} heading="Try TextUtils - Word Counter etc..." />
           </Route>
         </Switch>
       </Router>
