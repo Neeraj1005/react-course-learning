@@ -8,10 +8,12 @@ export default function Form(props) {
   };
 
   const handleCopy = () => {
-    const copyText = document.getElementById("texareaBox");
-    copyText.select();
-    navigator.clipboard.writeText(copyText.value);
-    document.getSelection().removeAllRanges();
+    // navigator is efficient to copy the text
+    // const copyText = document.getElementById("texareaBox");
+    // copyText.select();
+    // navigator.clipboard.writeText(copyText.value);
+    navigator.clipboard.writeText(text);
+    // document.getSelection().removeAllRanges();
     props.showAlert("Text Copied", "success");
   };
 
@@ -98,7 +100,7 @@ export default function Form(props) {
       <div className={`text-${props.mode === "light" ? "gray" : "white"}`}>
         <h4>Summary</h4>
         <p>
-          {text.split(" ").filter((element) => element.length !== 0).length}{" "}
+          {text.split(/\s+/).filter((element) => element.length !== 0).length}{" "}
           words and {text.length} characters
         </p>
         <p>
