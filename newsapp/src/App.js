@@ -17,7 +17,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             <News
-              myLoader={progress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="general"
               pageSize={pageSize}
@@ -27,7 +27,7 @@ function App() {
           </Route>
           <Route exact path="/home">
             <News
-              myLoader={progress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="home"
               pageSize={pageSize}
@@ -37,7 +37,7 @@ function App() {
           </Route>
           <Route exact path="/business">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="business"
               pageSize={pageSize}
@@ -47,7 +47,7 @@ function App() {
           </Route>
           <Route exact path="/entertainment">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="entertainment"
               pageSize={pageSize}
@@ -57,7 +57,7 @@ function App() {
           </Route>
           <Route exact path="/general">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="general"
               pageSize={pageSize}
@@ -67,7 +67,7 @@ function App() {
           </Route>
           <Route exact path="/health">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="health"
               pageSize={pageSize}
@@ -77,7 +77,7 @@ function App() {
           </Route>
           <Route exact path="/science">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="science"
               pageSize={pageSize}
@@ -87,7 +87,7 @@ function App() {
           </Route>
           <Route exact path="/sports">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="sports"
               pageSize={pageSize}
@@ -97,7 +97,7 @@ function App() {
           </Route>
           <Route exact path="/technology">
             <News
-              myLoader={setProgress}
+              setProgress={setProgress}
               apiKey={apiKey}
               key="technology"
               pageSize={pageSize}
