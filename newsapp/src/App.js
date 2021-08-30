@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 export default class App extends Component {
-  pageSize = '15'
+  pageSize = 15;
   render() {
     return (
       <div>
