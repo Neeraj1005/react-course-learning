@@ -4,9 +4,9 @@ const { body, validationResult } = require("express-validator");
 
 const router = express.Router();
 
-// create a user using: POST "api/auth". Doesn't require AUTH
+// create a user using: POST "api/auth". Register User
 router.post(
-  "/",
+  "/register",
   [
     body("name")
       .isLength({ min: 4 })
@@ -16,23 +16,35 @@ router.post(
       .isLength({ min: 5 })
       .withMessage("must be at least 5 chars long"),
   ],
-  (req, res) => {
+  async (req, res) => {
+    // validation error check
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    })
-      .then((user) => res.json(user))
-      .catch((err) => {
-        res.json({
-          error: 'please enter unique values for email',
-          message: err.message
-        });
+    // check user email is already exists
+    let user = await User.findOne({ email: req.body.email });
+    if (user) {
+      return res
+        .status(400)
+        .json({ error: "User already exists with this email" });
+    }
+    try {
+      user = await Userd.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
       });
+
+      res.json({
+        status: 200,
+        message: "success",
+        username: user.name,
+      });
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Error Occured");
+    }
   }
 );
 
