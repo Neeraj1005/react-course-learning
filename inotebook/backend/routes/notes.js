@@ -94,4 +94,34 @@ router.put("/update/:id", fetchUser, async (req, res) => {
   }
 });
 
+// DELETE: delete note "/api/notes/destroy". Login Required
+router.delete("/destroy/:id", fetchUser, async (req, res) => {
+  try {
+    // Find a note to be delete and delete it
+    // First find Note by id is exist or Not
+    let note = await Note.findById(req.params.id);
+    
+    if(!note){
+        return res.status(404).send("Not Found")
+    }
+    // check logged user id is match with note user_id
+    if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("User Not Authorized") 
+    }
+    // Now if all true above delete the note
+    note = await Note.findByIdAndDelete(req.params.id)
+
+    // return success response
+    res.json({
+      status: 200,
+      note: note,
+      message: "Note has been successfully deleted"
+    });
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
+
 module.exports = router;
