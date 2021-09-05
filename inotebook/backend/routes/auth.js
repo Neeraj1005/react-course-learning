@@ -1,6 +1,10 @@
 const express = require("express");
 const User = require("../models/User");
 const { body, validationResult } = require("express-validator");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+
+const JWT_SECRET = '#learnreact';
 
 const router = express.Router();
 
@@ -30,16 +34,30 @@ router.post(
         .json({ error: "User already exists with this email" });
     }
     try {
-      user = await Userd.create({
+      // encypt the password using salt bcrypt method
+      const salt = await bcrypt.genSalt(10);
+      var secPass = await bcrypt.hash(req.body.password, salt);
+
+      user = await User.create({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: secPass,
       });
+
+      // generate token and send
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      const authtoken = jwt.sign(data, JWT_SECRET);
 
       res.json({
         status: 200,
         message: "success",
         username: user.name,
+        token: authtoken,
       });
     } catch (error) {
       console.log(error.message);
