@@ -24,7 +24,7 @@ router.post(
   ],
   async (req, res) => {
     try {
-      // destructuring the objec
+      // destructuring the object
       const { title, description, tag } = req.body;
 
       // validation error check
@@ -55,5 +55,43 @@ router.post(
     }
   }
 );
+
+// PUT/PATCH: update notes "/api/notes/update". Login Required
+router.put("/update/:id", fetchUser, async (req, res) => {
+  try {
+    // destructuring the object
+    const { title, description, tag } = req.body;
+
+    // create a newnote object
+    const newNoteObject = {};
+
+    if(title){newNoteObject.title = title}
+    if(description){newNoteObject.description = description}
+    if(tag){newNoteObject.tag = tag}
+
+    // Find a note to be udated or update it
+    // First find Note by id is exist or Not
+    let note = await Note.findById(req.params.id);
+    if(!note){
+        return res.status(404).send("Not Found")
+    }
+    // check logged user id is match with note user_id
+    if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("User Not Authorized") 
+    }
+    // Now if all true above update the note
+    note = await Note.findByIdAndUpdate(req.params.id, {$set: newNoteObject}, {new:true})
+
+    // return success response
+    res.json({
+      status: 200,
+      data: note,
+    });
+
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 module.exports = router;
