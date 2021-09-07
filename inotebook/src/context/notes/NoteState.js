@@ -3,12 +3,12 @@ import NoteContext from "./noteContext";
 
 const NoteState = (props) => {
   const host = "http://localhost:5000";
-
-  const [notes, setNotes] = useState([]);
+  
+  const notesInitial = [];
+  const [notes, setNotes] = useState(notesInitial);
 
   // Add a note
   const addNote = async (title, description, tag) => {
-    // TODO: API Call
     // API Call
     const response = await fetch(`${host}/api/notes/store`, {
       method: "POST",
@@ -19,18 +19,8 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const note = {
-      _id: "1",
-      user: "6134505b1e13f01258f61e7b",
-      title: title,
-      description: description,
-      tag: tag,
-      date: "2021-09-05T07:32:25.493Z",
-      __v: 0,
-    };
-    const json = await response.json();
-    console.log(json);
-    setNotes(notes.concat(note));
+    const note = await response.json();
+    setNotes(notes.concat(note.data));
   };
 
   // Get All Notes
@@ -83,7 +73,7 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
     });
     const json = await response.json();
-    console.log(json);
+
     let newNotes = JSON.parse(JSON.stringify(notes));
     // Logic to edit in client
     for (let index = 0; index < newNotes.length; index++) {
@@ -95,7 +85,7 @@ const NoteState = (props) => {
         break;
       }
     }
-    setNotes(newNotes)
+    setNotes(newNotes);
   };
 
   return (

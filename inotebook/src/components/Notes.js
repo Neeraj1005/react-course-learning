@@ -33,7 +33,7 @@ const Notes = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    editNote(note.id, note.etitle, note.edescription, note.etag)
+    editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
   };
 
@@ -88,6 +88,8 @@ const Notes = () => {
                     name="etitle"
                     value={note.etitle}
                     onChange={onChange}
+                    minLength={5}
+                    required
                   />
                 </div>
                 <div className="mb-3">
@@ -100,6 +102,8 @@ const Notes = () => {
                     name="edescription"
                     value={note.edescription}
                     onChange={onChange}
+                    minLength={5}
+                    required
                   ></textarea>
                 </div>
                 <div className="mb-3">
@@ -125,7 +129,7 @@ const Notes = () => {
                 >
                   Close
                 </button>
-                <button                  
+                <button
                   type="submit"
                   className="btn btn-primary"
                   onClick={handleUpdate}
@@ -137,11 +141,14 @@ const Notes = () => {
           </div>
         </div>
       </div>
-      <div className="row">
-        <h1>Your Notes</h1>
+      <div className="row my-3">
+        <h2>You Notes</h2>
+        <div className="container mx-2">
+          {notes.length === 0 && "No notes to display"}
+        </div>
         {notes.map((note) => {
           return (
-            <NoteItem key={note._id} note={note} updateNote={updateNote} />
+            <NoteItem key={note._id} updateNote={updateNote} note={note} />
           );
         })}
       </div>
