@@ -12,8 +12,10 @@ const Notes = () => {
   }, []);
 
   const ref = useRef(null);
+  const refClose = useRef(null);
 
   const [note, setNote] = useState({
+    id: "",
     etitle: "",
     edescription: "",
     etag: "",
@@ -21,12 +23,18 @@ const Notes = () => {
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag})
+    setNote({
+      id: currentNote._id,
+      etitle: currentNote.title,
+      edescription: currentNote.description,
+      etag: currentNote.tag,
+    });
   };
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    editNote()
+    editNote(note.id, note.etitle, note.edescription, note.etag)
+    refClose.current.click();
   };
 
   const onChange = (e) => {
@@ -110,13 +118,14 @@ const Notes = () => {
               </div>
               <div className="modal-footer">
                 <button
+                  ref={refClose}
                   type="button"
                   className="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >
                   Close
                 </button>
-                <button
+                <button                  
                   type="submit"
                   className="btn btn-primary"
                   onClick={handleUpdate}
