@@ -5,7 +5,7 @@ const Nav = () => {
   const location = useLocation();
   useEffect(() => {}, [location]);
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           iNotebook
@@ -45,17 +45,14 @@ const Nav = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
+          <div className="d-flex">
+            <Link className="btn btn-primary mx-1" to="/login">
+              Login
+            </Link>
+            <Link className="btn btn-primary mx-1" to="/signup">
+              SignUp
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
