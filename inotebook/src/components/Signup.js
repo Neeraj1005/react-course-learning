@@ -1,29 +1,31 @@
 import React, {useState} from "react";
 import { useHistory } from "react-router-dom";
 
-const Signup = () => {
+const Signup = (props) => {
   const host = "http://localhost:5000";
   const history = useHistory();
   const [credentials, setCredentials] = useState({name: "", email: "", password: "", c_password: ""});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (credentials.password !== credentials.c_password) {
-        alert('Password Not Matched')
-    }
-    const response = await fetch(`${host}/api/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password }),
-    });
-    const json = await response.json();
-    if (json.status === 200) {
-        localStorage.setItem('token', json.token);
-        history.push('/')
+    if (credentials.password === credentials.c_password) {
+      const response = await fetch(`${host}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password }),
+      });
+      const json = await response.json();
+      if (json.status === 200) {
+          localStorage.setItem('token', json.token);
+          history.push('/')
+          props.showAlert('Account Created Successfully','success')
+      } else {
+          props.showAlert('Invalid credentials','danger')
+      }
     } else {
-        alert('invalid')
+      props.showAlert('Password Not Matched','danger')
     }
   };
 
