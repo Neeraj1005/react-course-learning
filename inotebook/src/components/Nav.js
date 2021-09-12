@@ -1,9 +1,21 @@
-import React, { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useHistory } from "react-router-dom";
 
 const Nav = () => {
   const location = useLocation();
-  useEffect(() => {}, [location]);
+  const [isToken, setIsToken] = useState(false);
+  let history = useHistory()
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setIsToken(true);
+    } else {
+      setIsToken(false);
+    }
+  }, [location]);
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    history.push('/login');
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -46,12 +58,22 @@ const Nav = () => {
             </li>
           </ul>
           <div className="d-flex">
-            <Link className="btn btn-primary mx-1" to="/login">
-              Login
-            </Link>
-            <Link className="btn btn-primary mx-1" to="/signup">
-              SignUp
-            </Link>
+            {!isToken ? (
+              <>
+                <Link className="btn btn-primary mx-1" to="/login">
+                  Login
+                </Link>
+                <Link className="btn btn-primary mx-1" to="/signup">
+                  SignUp
+                </Link>
+              </>
+            ) : (
+              <>
+                <button className="btn btn-primary mx-1" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>

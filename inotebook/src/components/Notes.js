@@ -2,12 +2,18 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import noteContext from "../context/notes/noteContext";
 import NoteItem from "./NoteItem";
 import AddNote from "./AddNote";
+import { useHistory } from "react-router";
 
 const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, fetchAllNote, editNote } = context;
+  const history = useHistory();
   useEffect(() => {
-    fetchAllNote();
+    if (localStorage.getItem("token")) {
+      fetchAllNote();
+    } else {
+      history.push("/login");
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -36,7 +42,7 @@ const Notes = (props) => {
     e.preventDefault();
     editNote(note.id, note.etitle, note.edescription, note.etag);
     refClose.current.click();
-    props.showAlert('updated Successfully','success')
+    props.showAlert("updated Successfully", "success");
   };
 
   const onChange = (e) => {
@@ -149,7 +155,12 @@ const Notes = (props) => {
         </div>
         {notes.map((note) => {
           return (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
+            <NoteItem
+              key={note._id}
+              updateNote={updateNote}
+              note={note}
+              showAlert={props.showAlert}
+            />
           );
         })}
       </div>
