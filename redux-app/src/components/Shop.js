@@ -4,10 +4,10 @@ const Shop = () => {
   return (
     <div>
         <h2>
-            Buy Adidas Shoes 50 Rs
+            Deposit/Withdraw Money
         </h2>
       <button className="btn btn-primary mx-2">+</button>
-      Add Item to Cart
+      Update Balance
       <button className="btn btn-primary mx-2">-</button>
     </div>
   );
